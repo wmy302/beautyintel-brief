@@ -46,8 +46,8 @@ def latest_report_view(db: Session = Depends(get_db)) -> HTMLResponse:
 
 def _refresh_today_report(db: Session) -> HTMLResponse:
     started_at = utc_now()
-    IngestionPipeline().run(db, dry_run=False)
-    report = ReportGenerator().generate(db, date.today(), dry_run=False, since=started_at)
+    ingest_result = IngestionPipeline().run(db, dry_run=False)
+    report = ReportGenerator().generate(db, date.today(), dry_run=False, since=started_at, item_ids=ingest_result.get("item_ids", []))
     return HTMLResponse(report.html_content)
 
 

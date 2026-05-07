@@ -12,7 +12,7 @@ def run_daily_brief(dry_run: bool = False) -> dict:
     try:
         started_at = utc_now()
         ingest_result = IngestionPipeline().run(db, dry_run=False)
-        report = ReportGenerator().generate(db, date.today(), dry_run=False, since=started_at)
+        report = ReportGenerator().generate(db, date.today(), dry_run=False, since=started_at, item_ids=ingest_result.get("item_ids", []))
         delivery = [s.send(report.markdown_content, report.html_content, report.title, dry_run=dry_run).__dict__ for s in get_delivery_services()]
         return {"ingest": ingest_result, "report_id": report.id, "delivery": delivery}
     finally:

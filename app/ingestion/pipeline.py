@@ -83,6 +83,7 @@ class IngestionPipeline:
         existing_by_hash = {row.title_hash: row for row in db.query(NewsItem).all() if row.title_hash}
         inserted = 0
         refreshed = 0
+        touched_item_ids: list[int] = []
         processed: list[NewsItem] = []
         for item in unique_items:
             existing = existing_by_hash.get(item.title_hash)
@@ -94,6 +95,7 @@ class IngestionPipeline:
                     if item.published_at is not None:
                         existing.published_at = item.published_at
                     refreshed += 1
+                    touched_item_ids.append(existing.id)
                 continue
             source = source_by_name.get(item.source_name) or db.query(Source).filter(Source.id == item.source_id).one_or_none()
             try:
@@ -109,6 +111,8 @@ class IngestionPipeline:
             processed.append(item)
             if not dry_run:
                 db.add(item)
+                db.flush()
+                touched_item_ids.append(item.id)
                 inserted += 1
         if not dry_run:
             db.commit()
@@ -119,6 +123,7 @@ class IngestionPipeline:
             "unique_count": len(unique_items),
             "inserted_count": inserted if not dry_run else 0,
             "refreshed_count": refreshed if not dry_run else 0,
+            "item_ids": touched_item_ids if not dry_run else [],
             "dry_run": dry_run,
             "elapsed_seconds": round(perf_counter() - started, 2),
         }

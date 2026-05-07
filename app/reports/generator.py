@@ -20,12 +20,31 @@ class ReportGenerator:
         template_dir = root_path("app", "reports", "templates")
         self.env = Environment(loader=FileSystemLoader(template_dir), autoescape=select_autoescape())
 
-    def generate(self, db: Session, report_date: date, dry_run: bool = False, since: datetime | None = None) -> DailyReport:
+    def generate(
+        self,
+        db: Session,
+        report_date: date,
+        dry_run: bool = False,
+        since: datetime | None = None,
+        item_ids: list[int] | None = None,
+    ) -> DailyReport:
         query = db.query(NewsItem).filter(
             NewsItem.is_duplicate.is_(False),
             NewsItem.status.in_(["processed", "included_in_report"]),
         )
-        if since is not None:
+        if item_ids:
+            query = query.filter(NewsItem.id.in_(item_ids))
+            window_start, window_end = self._brief_window(report_date)
+            strict_query = query.filter(
+                or_(
+                    and_(NewsItem.published_at.is_not(None), NewsItem.published_at >= window_start, NewsItem.published_at < window_end),
+                    NewsItem.published_at.is_(None),
+                )
+            )
+            items = strict_query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
+            if not items:
+                items = query.filter(NewsItem.source_name.like("%搜狗新闻%")).order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
+        elif since is not None:
             query = query.filter(NewsItem.fetched_at >= since)
             window_start, window_end = self._brief_window(report_date)
             query = query.filter(
@@ -34,7 +53,9 @@ class ReportGenerator:
                     and_(NewsItem.published_at.is_(None), NewsItem.fetched_at >= since),
                 )
             )
-        items = query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
+            items = query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
+        else:
+            items = query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
         context = self._context(db, items, report_date)
         md = self.env.get_template("daily_brief.md.j2").render(**context)
         html_content = self.env.get_template("daily_brief.html.j2").render(**context)
