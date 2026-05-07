@@ -40,7 +40,7 @@ def latest_report(db: Session = Depends(get_db)) -> dict:
 def latest_report_view(db: Session = Depends(get_db)) -> HTMLResponse:
     report = db.query(DailyReport).order_by(DailyReport.generated_at.desc()).first()
     if not report:
-        raise HTTPException(status_code=404, detail="report not found")
+        return _refresh_today_report(db)
     return HTMLResponse(report.html_content)
 
 
