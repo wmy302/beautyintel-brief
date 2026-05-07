@@ -1,0 +1,234 @@
+sources:
+  - name: "国家药监局 - 化妆品公告通告"
+    source_type: "webpage"
+    url: "https://www.nmpa.gov.cn/hzhp/hzhpjmtg/index.html"
+    homepage_url: "https://www.nmpa.gov.cn"
+    language: "zh"
+    country_or_region: "CN"
+    category: "regulation"
+    credibility_level: "official"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["监管", "公告", "化妆品", "合规"]
+    notes: "真实官方来源。当前环境请求返回 412，不绕过访问保护；建议通过官方公开下载、人工导入或合规数据接口接入。"
+  - name: "国家药监局 - 化妆品抽检通告"
+    source_type: "webpage"
+    url: "https://www.nmpa.gov.cn/hzhp/hzhpcjgg/index.html"
+    homepage_url: "https://www.nmpa.gov.cn"
+    language: "zh"
+    country_or_region: "CN"
+    category: "regulation"
+    credibility_level: "official"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["抽检", "不符合规定", "禁用原料", "风险"]
+    notes: "真实官方来源。当前环境请求返回 412，不绕过访问保护；建议通过官方公开下载、人工导入或合规数据接口接入。"
+  - name: "FDA - Recalls, Market Withdrawals & Safety Alerts"
+    source_type: "webpage"
+    url: "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts?search=cosmetic"
+    homepage_url: "https://www.fda.gov"
+    language: "en"
+    country_or_region: "US"
+    category: "regulation"
+    credibility_level: "official"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["FDA", "recall", "cosmetics", "safety", "regulation"]
+    notes: "FDA 公开召回与安全警示页面，按 cosmetic 关键词查询。"
+  - name: "PR.com - Cosmetics Press Releases"
+    source_type: "rss"
+    url: "https://www.pr.com/rss/news-by-category/235.xml"
+    homepage_url: "https://www.pr.com"
+    language: "en"
+    country_or_region: "GLOBAL"
+    category: "industry_trend"
+    credibility_level: "industry_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["cosmetics", "press release", "brand", "product"]
+  - name: "PR.com - Beauty Press Releases"
+    source_type: "rss"
+    url: "https://www.pr.com/rss/news-by-category/126.xml"
+    homepage_url: "https://www.pr.com"
+    language: "en"
+    country_or_region: "GLOBAL"
+    category: "industry_trend"
+    credibility_level: "industry_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["beauty", "press release", "brand", "product"]
+  - name: "PR Newswire APAC - Consumer Products & Retail"
+    source_type: "rss"
+    url: "https://en.prnasia.com/story/industry-group/2-0.rss"
+    homepage_url: "https://en.prnasia.com"
+    language: "en"
+    country_or_region: "APAC"
+    category: "industry_trend"
+    credibility_level: "industry_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["APAC", "consumer products", "retail", "beauty"]
+    notes: "真实 RSS，但分类较宽，默认关闭；启用时建议增加品牌/品类关键词白名单过滤。"
+  - name: "聚美丽 - 化妆品行业头条"
+    source_type: "webpage"
+    url: "https://www.jumeili.cn/index-2-1.html"
+    homepage_url: "https://www.jumeili.cn"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "industry_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["聚美丽", "中国美妆", "行业媒体", "国货", "监管", "渠道"]
+    notes: "公开行业资讯列表页，只读取标题、摘要、日期和原文链接。"
+  - name: "CBO化妆品财经在线 - 搜狐号"
+    source_type: "webpage"
+    url: "https://m.sohu.com/media/120166458"
+    homepage_url: "https://www.cbo.cn"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "industry_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["CBO", "化妆品财经在线", "中国美妆", "品牌", "渠道", "资本"]
+    notes: "CBO 在搜狐号的公开主页，读取公开文章卡片。"
+  - name: "小红书趋势 - 合规导入占位"
+    source_type: "manual_csv"
+    url: "data/imports/xhs_trends.csv"
+    homepage_url: "https://www.xiaohongshu.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "social_trend"
+    credibility_level: "manual"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["小红书", "社媒热点", "人工导入", "第三方数据"]
+    notes: "不做非授权爬虫。请通过小红书官方能力、合规第三方数据服务或人工导出 CSV 接入。"
+  - name: "人民网财经 - 美妆消费"
+    source_type: "rss"
+    url: "http://www.people.com.cn/rss/finance.xml"
+    homepage_url: "https://finance.people.com.cn"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["人民网", "主流媒体", "财经", "消费", "美妆", "化妆品"]
+    notes: "人民网财经公开 RSS，系统按美妆/化妆品关键词过滤。"
+  - name: "央视网财经 - 美妆消费"
+    source_type: "rss"
+    url: "http://www.cctv.com/program/rss/02/04/index.xml"
+    homepage_url: "https://news.cctv.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["央视网", "主流媒体", "财经", "消费", "美妆", "化妆品"]
+    notes: "央视网财经公开 RSS，系统按美妆/化妆品关键词过滤。"
+  - name: "中国网商业 - 美妆消费"
+    source_type: "rss"
+    url: "http://www.china.org.cn/rss/1216549.xml"
+    homepage_url: "http://www.china.org.cn/business"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["中国网", "主流媒体", "商业", "消费", "美妆", "化妆品"]
+    notes: "中国网商业公开 RSS，系统按美妆/化妆品关键词过滤。"
+  - name: "小红书趋势 - 授权API"
+    source_type: "xhs_api"
+    url: ""
+    homepage_url: "https://www.xiaohongshu.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "social_trend"
+    credibility_level: "authorized_api"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["小红书", "社媒热点", "授权API", "美妆", "护肤", "彩妆"]
+    notes: "需在 .env 配置 XHS_SEARCH_API_URL 和 XHS_SEARCH_API_TOKEN；不做非授权爬虫或逆向。"
+  - name: "搜狗新闻 - 美妆公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E7%BE%8E%E5%A6%86"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "美妆", "化妆品", "消费", "品牌"]
+    notes: "公开新闻搜索补充源，用于主流媒体 RSS 当天没有美妆直发稿时补充近期报道。"
+  - name: "搜狗新闻 - 化妆品公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E5%8C%96%E5%A6%86%E5%93%81"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "化妆品", "监管", "消费", "品牌"]
+    notes: "公开新闻搜索补充源，用于补充近期化妆品市场和监管报道。"
+  - name: "Vogue Business Beauty"
+    source_type: "placeholder"
+    url: ""
+    homepage_url: "https://www.voguebusiness.com/beauty"
+    language: "en"
+    country_or_region: "GLOBAL"
+    category: "industry_trend"
+    credibility_level: "tier1_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["国际趋势", "美妆", "品牌"]
+  - name: "Business of Fashion Beauty"
+    source_type: "placeholder"
+    url: ""
+    homepage_url: "https://www.businessoffashion.com"
+    language: "en"
+    country_or_region: "GLOBAL"
+    category: "industry_trend"
+    credibility_level: "tier1_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["国际趋势", "商业", "美妆"]
+  - name: "CosmeticsDesign Asia"
+    source_type: "placeholder"
+    url: ""
+    homepage_url: "https://www.cosmeticsdesign-asia.com"
+    language: "en"
+    country_or_region: "APAC"
+    category: "industry_trend"
+    credibility_level: "industry_media"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["亚太", "成分", "法规", "产品"]
+  - name: "手动导入 - 小红书趋势"
+    source_type: "manual_csv"
+    url: "data/demo/sample_manual_import.csv"
+    homepage_url: ""
+    language: "zh"
+    country_or_region: "CN"
+    category: "social_trend"
+    credibility_level: "manual"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["小红书", "社媒热点", "人工导入"]
+  - name: "手动导入 - 竞品动态"
+    source_type: "manual_csv"
+    url: "data/demo/sample_manual_import.csv"
+    homepage_url: ""
+    language: "zh"
+    country_or_region: "CN"
+    category: "competitor"
+    credibility_level: "manual"
+    enabled: false
+    fetch_interval_minutes: 1440
+    tags: ["竞品", "新品", "营销"]

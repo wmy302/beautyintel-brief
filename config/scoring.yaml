@@ -1,0 +1,14 @@
+weights:
+  relevance_score: 0.40
+  impact_score: 0.25
+  urgency_score: 0.20
+  credibility_score: 0.15
+credibility:
+  official: 100
+  financial_report: 95
+  tier1_media: 85
+  industry_media: 75
+  platform_data: 70
+  manual: 60
+  social_signal: 50
+  rumor: 20

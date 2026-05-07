@@ -1,0 +1,45 @@
+own_brand:
+  name: "我们的品牌"
+  aliases: ["Our Brand", "品牌简称"]
+  categories: ["护肤", "功效护肤"]
+  hero_products: ["精华", "面霜", "防晒"]
+  key_claims: ["修护", "抗老", "敏感肌"]
+
+core_competitors:
+  - name: "竞品A"
+    aliases: ["竞品A英文名", "竞品A简称"]
+    categories: ["护肤", "功效护肤"]
+    priority: 5
+  - name: "竞品B"
+    aliases: ["竞品B英文名", "竞品B简称"]
+    categories: ["彩妆"]
+    priority: 4
+
+watchlist_brands:
+  - name: "欧莱雅"
+    aliases: ["L'Oréal", "L'Oreal"]
+    categories: ["护肤", "彩妆", "洗护", "香氛"]
+    priority: 3
+  - name: "雅诗兰黛"
+    aliases: ["Estée Lauder", "Estee Lauder"]
+    categories: ["护肤", "彩妆"]
+    priority: 3
+  - name: "资生堂"
+    aliases: ["Shiseido"]
+    categories: ["护肤", "彩妆"]
+    priority: 3
+
+platforms:
+  - "天猫"
+  - "京东"
+  - "抖音电商"
+  - "快手"
+  - "小红书"
+  - "拼多多"
+  - "唯品会"
+  - "丝芙兰"
+  - "屈臣氏"
+  - "TikTok"
+  - "Instagram"
+  - "YouTube"
+

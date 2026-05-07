@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9dee8;
+      --paper: #ffffff;
+      --bg: #f4f6fa;
+      --brand: #bd3f7b;
+      --brand-2: #0f766e;
+      --risk-red: #b42318;
+      --risk-orange: #b54708;
+      --risk-yellow: #a15c07;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      line-height: 1.7;
+    }
+    .page { max-width: 1160px; margin: 0 auto; padding: 28px 22px 56px; }
+    .hero {
+      background: linear-gradient(135deg, #fff 0%, #fff4f8 48%, #effcf9 100%);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+    .hero-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .refresh-form {
+      flex: 0 0 auto;
+      margin: 34px 28px 0 0;
+      transform: translateX(-140px);
+    }
+    .refresh-button {
+      min-height: 40px;
+      border: 1px solid #a62b66;
+      border-radius: 8px;
+      background: var(--brand);
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 0 15px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(189, 63, 123, .16);
+    }
+    .refresh-button:hover { background: #a62b66; }
+    .refresh-button:focus-visible { outline: 3px solid rgba(15, 118, 110, .28); outline-offset: 2px; }
+    .refresh-message {
+      max-width: 280px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .refresh-message.error { color: #b42318; }
+    .refresh-message.success { color: #0f766e; }
+    .eyebrow { color: var(--brand); font-weight: 700; letter-spacing: .08em; font-size: 13px; }
+    h1 { margin: 8px 0 10px; font-size: 34px; line-height: 1.2; }
+    .subtitle { color: var(--muted); margin: 0; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0 22px;
+    }
+    .stat {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .stat b { display: block; font-size: 26px; line-height: 1.1; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+      margin-top: 16px;
+    }
+    h2 { margin: 0 0 16px; font-size: 22px; }
+    h3 { margin: 0 0 8px; font-size: 18px; line-height: 1.45; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .list { display: grid; gap: 12px; }
+    .item {
+      border: 1px solid #e6e9f0;
+      border-radius: 8px;
+      padding: 15px;
+      background: #fff;
+    }
+    .item.top { border-left: 4px solid var(--brand); }
+    .item.risk-red { border-left: 4px solid var(--risk-red); }
+    .item.risk-orange { border-left: 4px solid var(--risk-orange); }
+    .item.risk-yellow { border-left: 4px solid var(--risk-yellow); }
+    .meta { color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      height: 24px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: #eef2f6;
+      color: #344054;
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .pill.s { background: #fde7f1; color: #9f1f5f; }
+    .pill.a { background: #e6f4f1; color: #0f766e; }
+    .pill.red { background: #fee4e2; color: var(--risk-red); }
+    .pill.orange { background: #fef0c7; color: var(--risk-orange); }
+    .pill.yellow { background: #fef7c3; color: var(--risk-yellow); }
+    .summary { margin: 8px 0; }
+    .why, .action {
+      margin: 8px 0 0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f7f9fc;
+      color: #344054;
+    }
+    .action { background: #f0fdfa; }
+    a { color: #175cd3; text-decoration: none; font-weight: 650; }
+    a:hover { text-decoration: underline; }
+    .empty { color: var(--muted); padding: 10px 0; }
+    .actions { margin: 0; padding-left: 20px; }
+    .actions li { margin: 8px 0; }
+    @media (max-width: 900px) {
+      .stats, .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 620px) {
+      .page { padding: 16px 12px 36px; }
+      .hero, .section { padding: 18px; }
+      .hero-head { display: block; }
+      .refresh-form { margin-top: 14px; transform: none; }
+      .refresh-button { width: 100%; }
+      h1 { font-size: 28px; }
+      .stats, .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-head">
+        <div>
+          <div class="eyebrow">BEAUTYINTEL BRIEF</div>
+          <h1>{{ title }}</h1>
+        </div>
+        <form class="refresh-form" action="http://127.0.0.1:8001/reports/refresh-today" method="post" data-refresh-form>
+          <button class="refresh-button" type="submit" data-refresh-button>刷新今日早报</button>
+          <p class="refresh-message" data-refresh-message></p>
+        </form>
+      </div>
+      <p class="subtitle">自动生成时间：{{ generated_at }}</p>
+    </section>
+
+    <section class="stats" aria-label="早报统计">
+      <div class="stat"><b>{{ stats.source_count }}</b><span>数据源数量</span></div>
+      <div class="stat"><b>{{ stats.new_item_count }}</b><span>新增新闻</span></div>
+      <div class="stat"><b>{{ stats.included_item_count }}</b><span>入选早报</span></div>
+      <div class="stat"><b>{{ stats.red_risk_count }}</b><span>高风险预警</span></div>
+    </section>
+
+    <section class="section">
+      <h2>一、今日 3 条必读</h2>
+      <div class="grid">
+        {% for item in top_items %}
+        <article class="item top">
+          <div class="meta"><span>{{ item.source_name }}</span><span>{{ item.published_at }}</span><span class="pill {{ item.importance_level|lower }}">重要级别 {{ item.importance_level }}</span></div>
+          <h3>{{ loop.index }}. {{ item.title }}</h3>
+          <p class="summary">{{ item.summary_zh }}</p>
+          <p class="why"><b>为什么重要：</b>{{ item.why_it_matters }}</p>
+          <p class="action"><b>建议动作：</b>{{ item.action_recommendation }}</p>
+          <a href="{{ item.url }}">查看原文</a>
+        </article>
+        {% else %}
+        <p class="empty">本次刷新没有抓取到新的新闻。请检查本地后台是否可联网，或稍后再试。</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>二、今日风险预警</h2>
+      <div class="list">
+        {% for item in risk_items %}
+        <article class="item risk-{{ item.risk_level }}">
+          <div class="meta"><span class="pill {{ item.risk_level }}">{{ item.risk_level }}</span><span>{{ item.source_name }}</span><span>影响团队：{{ item.affected_team }}</span></div>
+          <h3>{{ item.title }}</h3>
+          <p class="summary"><b>风险原因：</b>{{ item.risk_reason }}</p>
+          <p class="action"><b>建议动作：</b>{{ item.action_recommendation }}</p>
+          <a href="{{ item.url }}">查看原文</a>
+        </article>
+        {% else %}
+        <p class="empty">今日未识别到高风险预警。</p>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% for section in [
+      ("三、今日可行动机会", opportunity_items),
+      ("四、竞品品牌动态", competitor_items),
+      ("五、政策法规与合规预警", regulation_items),
+      ("六、新品、成分与功效趋势", product_ingredient_items),
+      ("七、渠道与电商动态", ecommerce_channel_items),
+      ("八、社媒热点与内容趋势", social_trend_items),
+      ("九、其他观察", other_items)
+    ] %}
+    <section class="section">
+      <h2>{{ section[0] }}</h2>
+      <div class="list">
+        {% for item in section[1] %}
+        <article class="item">
+          <div class="meta">
+            <span>{{ item.source_name }}</span>
+            {% if item.related_brands %}<span>品牌：{{ item.related_brands }}</span>{% endif %}
+            {% if item.related_platforms %}<span>平台：{{ item.related_platforms }}</span>{% endif %}
+            {% if item.related_ingredients %}<span>成分：{{ item.related_ingredients }}</span>{% endif %}
+            {% if item.tags %}<span>标签：{{ item.tags }}</span>{% endif %}
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p class="summary">{{ item.summary_zh }}</p>
+          {% if item.why_it_matters %}<p class="why"><b>看点：</b>{{ item.why_it_matters }}</p>{% endif %}
+          {% if item.action_recommendation %}<p class="action"><b>建议动作：</b>{{ item.action_recommendation }}</p>{% endif %}
+          <a href="{{ item.url }}">查看原文</a>
+        </article>
+        {% else %}
+        <p class="empty">暂无入选内容。</p>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+
+    <section class="section">
+      <h2>十、今日建议动作</h2>
+      <ul class="actions">
+        {% for action in recommended_actions %}
+        <li>{{ action }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+  <script>
+    const refreshForm = document.querySelector("[data-refresh-form]");
+    const refreshButton = document.querySelector("[data-refresh-button]");
+    const refreshMessage = document.querySelector("[data-refresh-message]");
+
+    if (refreshForm && refreshButton && refreshMessage) {
+      refreshForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        refreshButton.disabled = true;
+        refreshButton.textContent = "正在联网刷新...";
+        refreshMessage.className = "refresh-message";
+        refreshMessage.textContent = "正在抓取已配置的数据源并生成今日早报，请稍等。";
+
+        try {
+          const response = await fetch(refreshForm.action, { method: "POST" });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const html = await response.text();
+          refreshMessage.className = "refresh-message success";
+          refreshMessage.textContent = "刷新完成，正在打开今日早报。";
+          document.open();
+          document.write(html);
+          document.close();
+        } catch (error) {
+          refreshMessage.className = "refresh-message error";
+          refreshMessage.textContent = "本地刷新后台未启动。请双击项目根目录的 start_beautyintel_daily.bat，打开新页面后再点击刷新。";
+          refreshButton.disabled = false;
+          refreshButton.textContent = "刷新今日早报";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+"""BeautyIntel Brief MVP."""
+

@@ -1,0 +1,158 @@
+# 美妆早报｜{{ report_date }}
+
+> 自动生成时间：{{ generated_at }}  
+> 数据源数量：{{ stats.source_count }}  
+> 新增新闻：{{ stats.new_item_count }}  
+> 入选早报：{{ stats.included_item_count }}  
+> 高风险预警：{{ stats.red_risk_count }}
+
+---
+
+## 一、今日 3 条必读
+
+{% for item in top_items %}
+### {{ loop.index }}. {{ item.title }}
+
+- 来源：{{ item.source_name }}
+- 发布时间：{{ item.published_at }}
+- 重要级别：{{ item.importance_level }}
+- 摘要：{{ item.summary_zh }}
+- 为什么重要：{{ item.why_it_matters }}
+- 建议动作：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 二、今日风险预警
+
+{% if risk_items %}
+{% for item in risk_items %}
+### {{ item.title }}
+
+- 来源：{{ item.source_name }}
+- 风险级别：{{ item.risk_level }}
+- 风险原因：{{ item.risk_reason }}
+- 影响团队：{{ item.affected_team }}
+- 建议动作：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+{% else %}
+今日未识别到高风险预警。
+{% endif %}
+
+---
+
+## 三、今日可行动机会
+
+{% for item in opportunity_items %}
+### {{ item.title }}
+
+- 机会点：{{ item.why_it_matters }}
+- 建议动作：{{ item.action_recommendation }}
+- 相关标签：{{ item.tags }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 四、竞品品牌动态
+
+{% for item in competitor_items %}
+### {{ item.title }}
+
+- 相关品牌：{{ item.related_brands }}
+- 摘要：{{ item.summary_zh }}
+- 对我们的意义：{{ item.why_it_matters }}
+- 建议动作：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 五、政策法规与合规预警
+
+{% for item in regulation_items %}
+### {{ item.title }}
+
+- 风险级别：{{ item.risk_level }}
+- 摘要：{{ item.summary_zh }}
+- 建议动作：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 六、新品、成分与功效趋势
+
+{% for item in product_ingredient_items %}
+### {{ item.title }}
+
+- 相关成分：{{ item.related_ingredients }}
+- 相关品牌：{{ item.related_brands }}
+- 摘要：{{ item.summary_zh }}
+- 建议动作：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 七、渠道与电商动态
+
+{% for item in ecommerce_channel_items %}
+### {{ item.title }}
+
+- 相关平台：{{ item.related_platforms }}
+- 摘要：{{ item.summary_zh }}
+- 建议动作：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 八、社媒热点与内容趋势
+
+{% for item in social_trend_items %}
+### {{ item.title }}
+
+- 爆发平台：{{ item.related_platforms }}
+- 热点摘要：{{ item.summary_zh }}
+- 可跟进角度：{{ item.action_recommendation }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 九、其他观察
+
+{% for item in other_items %}
+### {{ item.title }}
+
+- 分类：{{ item.category }}
+- 摘要：{{ item.summary_zh }}
+- 原文：{{ item.url }}
+
+{% endfor %}
+
+---
+
+## 十、今日建议动作
+
+{% for action in recommended_actions %}
+- {{ action }}
+{% endfor %}
+
+---
+
+## 附：系统说明
+
+本早报由 BeautyIntel Brief 自动生成。内容基于配置数据源、人工导入数据和 AI 辅助摘要生成。请以原文来源为准，重要合规事项需由法务或合规团队复核。
+

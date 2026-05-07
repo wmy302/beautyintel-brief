@@ -1,0 +1,13 @@
+.git
+.pytest_cache
+__pycache__
+*.pyc
+pytest-cache-files-*
+data/*.db
+data/*.log
+data/*.out.log
+data/*.err.log
+data/reports/*.html
+data/reports/*.md
+.env
+ngrok.exe

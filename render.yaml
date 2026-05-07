@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: beautyintel-brief
+    env: docker
+    plan: starter
+    autoDeploy: true
+    disk:
+      name: beautyintel-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:////app/data/beautyintel.db
+      - key: BRIEF_TIMEZONE
+        value: Asia/Shanghai
+      - key: ENABLE_BACKGROUND_SCHEDULER
+        value: true
+      - key: DELIVER_CRON
+        value: 30 8 * * *
