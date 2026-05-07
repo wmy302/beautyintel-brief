@@ -160,7 +160,7 @@
           <div class="eyebrow">BEAUTYINTEL BRIEF</div>
           <h1>{{ title }}</h1>
         </div>
-        <form class="refresh-form" action="http://127.0.0.1:8001/reports/refresh-today" method="post" data-refresh-form>
+        <form class="refresh-form" action="/reports/refresh-today" method="post" data-refresh-form>
           <button class="refresh-button" type="submit" data-refresh-button>刷新今日早报</button>
           <p class="refresh-message" data-refresh-message></p>
         </form>
@@ -279,7 +279,7 @@
           document.close();
         } catch (error) {
           refreshMessage.className = "refresh-message error";
-          refreshMessage.textContent = "本地刷新后台未启动。请双击项目根目录的 start_beautyintel_daily.bat，打开新页面后再点击刷新。";
+          refreshMessage.textContent = "刷新失败。请确认服务正在运行；如果是 Render 云端，请稍后重试或查看 Render 日志。";
           refreshButton.disabled = false;
           refreshButton.textContent = "刷新今日早报";
         }

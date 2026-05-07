@@ -15,5 +15,7 @@ services:
         value: Asia/Shanghai
       - key: ENABLE_BACKGROUND_SCHEDULER
         value: true
+      - key: REFRESH_ON_STARTUP
+        value: true
       - key: DELIVER_CRON
         value: 30 8 * * *

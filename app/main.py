@@ -9,6 +9,7 @@ from app.api.routes_sources import router as sources_router
 from app.core.config import get_settings
 from app.core.logging import configure_logging
 from app.db.base import init_db
+from app.jobs.daily_brief_job import run_daily_brief
 from app.jobs.scheduler import start_background_scheduler
 
 configure_logging()
@@ -25,7 +26,10 @@ app.include_router(jobs_router)
 def startup() -> None:
     global background_scheduler
     init_db()
-    if get_settings().enable_background_scheduler and background_scheduler is None:
+    settings = get_settings()
+    if settings.refresh_on_startup:
+        run_daily_brief(dry_run=True)
+    if settings.enable_background_scheduler and background_scheduler is None:
         background_scheduler = start_background_scheduler()
 
 

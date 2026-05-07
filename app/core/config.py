@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     process_cron: str = "0 8 * * *"
     deliver_cron: str = "30 8 * * *"
     enable_background_scheduler: bool = False
+    refresh_on_startup: bool = False
     xhs_search_api_url: str | None = None
     xhs_search_api_token: str | None = None
     xhs_search_keywords: str = "美妆,护肤,彩妆,香水,防晒,小红书美妆"
