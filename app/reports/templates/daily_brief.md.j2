@@ -13,7 +13,6 @@
 {% for item in top_items %}
 ### {{ loop.index }}. {{ item.title }}
 
-- 来源：{{ item.source_name }}
 - 发布时间：{{ item.published_at }}
 - 重要级别：{{ item.importance_level }}
 - 摘要：{{ item.summary_zh }}
@@ -31,7 +30,7 @@
 {% for item in risk_items %}
 ### {{ item.title }}
 
-- 来源：{{ item.source_name }}
+- 发布时间：{{ item.published_at }}
 - 风险级别：{{ item.risk_level }}
 - 风险原因：{{ item.risk_reason }}
 - 影响团队：{{ item.affected_team }}
@@ -155,4 +154,3 @@
 ## 附：系统说明
 
 本早报由 BeautyIntel Brief 自动生成。内容基于配置数据源、人工导入数据和 AI 辅助摘要生成。请以原文来源为准，重要合规事项需由法务或合规团队复核。
-

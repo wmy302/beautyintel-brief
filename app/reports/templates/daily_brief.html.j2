@@ -180,7 +180,7 @@
       <div class="grid">
         {% for item in top_items %}
         <article class="item top">
-          <div class="meta"><span>{{ item.source_name }}</span><span>{{ item.published_at }}</span><span class="pill {{ item.importance_level|lower }}">重要级别 {{ item.importance_level }}</span></div>
+          <div class="meta">{% if item.published_at %}<span>{{ item.published_at }}</span>{% endif %}<span class="pill {{ item.importance_level|lower }}">重要级别 {{ item.importance_level }}</span></div>
           <h3>{{ loop.index }}. {{ item.title }}</h3>
           <p class="summary">{{ item.summary_zh }}</p>
           <p class="why"><b>为什么重要：</b>{{ item.why_it_matters }}</p>
@@ -198,7 +198,7 @@
       <div class="list">
         {% for item in risk_items %}
         <article class="item risk-{{ item.risk_level }}">
-          <div class="meta"><span class="pill {{ item.risk_level }}">{{ item.risk_level }}</span><span>{{ item.source_name }}</span><span>影响团队：{{ item.affected_team }}</span></div>
+          <div class="meta"><span class="pill {{ item.risk_level }}">{{ item.risk_level }}</span>{% if item.published_at %}<span>{{ item.published_at }}</span>{% endif %}<span>影响团队：{{ item.affected_team }}</span></div>
           <h3>{{ item.title }}</h3>
           <p class="summary"><b>风险原因：</b>{{ item.risk_reason }}</p>
           <p class="action"><b>建议动作：</b>{{ item.action_recommendation }}</p>
@@ -225,7 +225,7 @@
         {% for item in section[1] %}
         <article class="item">
           <div class="meta">
-            <span>{{ item.source_name }}</span>
+            {% if item.published_at %}<span>{{ item.published_at }}</span>{% endif %}
             {% if item.related_brands %}<span>品牌：{{ item.related_brands }}</span>{% endif %}
             {% if item.related_platforms %}<span>平台：{{ item.related_platforms }}</span>{% endif %}
             {% if item.related_ingredients %}<span>成分：{{ item.related_ingredients }}</span>{% endif %}
