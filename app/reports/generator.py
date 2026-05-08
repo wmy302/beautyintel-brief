@@ -31,7 +31,13 @@ class ReportGenerator:
         query = db.query(NewsItem).filter(
             NewsItem.is_duplicate.is_(False),
             NewsItem.status.in_(["processed", "included_in_report"]),
+            NewsItem.url != "",
+            NewsItem.url.not_like("%news.sogou.com/link%"),
+            NewsItem.url.not_like("%newsa.html5.qq.com%"),
+            NewsItem.url.not_like("%post.mp.qq.com%"),
+            NewsItem.url.not_like("%jumeili.cn%"),
         )
+        base_query = query
         if item_ids:
             query = query.filter(NewsItem.id.in_(item_ids))
             window_start, window_end = self._brief_window(report_date)
@@ -42,8 +48,8 @@ class ReportGenerator:
                 )
             )
             items = strict_query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
-            if not items:
-                items = query.filter(NewsItem.source_name.like("%搜狗新闻%")).order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
+            if len(items) < 6:
+                items = self._with_recent_backfill(base_query, items, report_date)
         elif since is not None:
             query = query.filter(NewsItem.fetched_at >= since)
             window_start, window_end = self._brief_window(report_date)
@@ -54,6 +60,8 @@ class ReportGenerator:
                 )
             )
             items = query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
+            if len(items) < 6:
+                items = self._with_recent_backfill(base_query, items, report_date)
         else:
             items = query.order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast()).all()
         context = self._context(db, items, report_date)
@@ -87,6 +95,30 @@ class ReportGenerator:
         start_local = datetime.combine(report_date - timedelta(days=1), time.min, tzinfo=tz)
         end_local = datetime.combine(report_date, time.min, tzinfo=tz)
         return start_local.astimezone(ZoneInfo("UTC")), end_local.astimezone(ZoneInfo("UTC"))
+
+    def _recent_window(self, report_date: date, days: int = 7) -> tuple[datetime, datetime]:
+        tz = ZoneInfo("Asia/Shanghai")
+        start_local = datetime.combine(report_date - timedelta(days=days), time.min, tzinfo=tz)
+        end_local = datetime.combine(report_date, time.min, tzinfo=tz)
+        return start_local.astimezone(ZoneInfo("UTC")), end_local.astimezone(ZoneInfo("UTC"))
+
+    def _with_recent_backfill(self, query, items: list[NewsItem], report_date: date, target_count: int = 8) -> list[NewsItem]:
+        if len(items) >= target_count:
+            return items
+        seen_ids = {item.id for item in items}
+        recent_start, recent_end = self._recent_window(report_date)
+        backfill = (
+            query.filter(
+                NewsItem.published_at.is_not(None),
+                NewsItem.published_at >= recent_start,
+                NewsItem.published_at < recent_end,
+                NewsItem.id.not_in(seen_ids or {-1}),
+            )
+            .order_by(NewsItem.final_score.desc(), NewsItem.published_at.desc().nullslast())
+            .limit(target_count - len(items))
+            .all()
+        )
+        return items + backfill
 
     def _context(self, db: Session, items: list[NewsItem], report_date: date) -> dict[str, Any]:
         view = [self._view(item) for item in items]

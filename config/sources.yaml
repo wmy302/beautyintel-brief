@@ -177,6 +177,78 @@ sources:
     fetch_interval_minutes: 1440
     tags: ["新闻搜索", "化妆品", "监管", "消费", "品牌"]
     notes: "公开新闻搜索补充源，用于补充近期化妆品市场和监管报道。"
+  - name: "搜狗新闻 - 护肤公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E6%8A%A4%E8%82%A4"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "护肤", "消费", "品牌", "产品"]
+    notes: "公开新闻搜索补充源；系统会跳过无法解析到真实原文的搜狗中转链接。"
+  - name: "搜狗新闻 - 彩妆公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E5%BD%A9%E5%A6%86"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "market_overview"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "彩妆", "消费", "品牌", "产品"]
+    notes: "公开新闻搜索补充源；系统会跳过无法解析到真实原文的搜狗中转链接。"
+  - name: "搜狗新闻 - 国货美妆公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E5%9B%BD%E8%B4%A7%E7%BE%8E%E5%A6%86"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "competitor"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "国货美妆", "品牌", "消费", "竞争"]
+    notes: "公开新闻搜索补充源；系统会跳过无法解析到真实原文的搜狗中转链接。"
+  - name: "搜狗新闻 - 化妆品监管公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E5%8C%96%E5%A6%86%E5%93%81%E7%9B%91%E7%AE%A1"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "regulation"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "化妆品", "监管", "标准", "合规"]
+    notes: "公开新闻搜索补充源；系统会跳过无法解析到真实原文的搜狗中转链接。"
+  - name: "搜狗新闻 - 美妆行业公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E7%BE%8E%E5%A6%86%E8%A1%8C%E4%B8%9A"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "industry_trend"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "美妆行业", "市场", "品牌", "渠道"]
+    notes: "公开新闻搜索补充源；系统会跳过无法解析到真实原文的搜狗中转链接。"
+  - name: "搜狗新闻 - 电商美妆公开新闻"
+    source_type: "webpage"
+    url: "https://news.sogou.com/news?query=%E7%94%B5%E5%95%86%E7%BE%8E%E5%A6%86"
+    homepage_url: "https://news.sogou.com"
+    language: "zh"
+    country_or_region: "CN"
+    category: "ecommerce_channel"
+    credibility_level: "mainstream_media"
+    enabled: true
+    fetch_interval_minutes: 1440
+    tags: ["新闻搜索", "电商", "美妆", "渠道", "消费"]
+    notes: "公开新闻搜索补充源；系统会跳过无法解析到真实原文的搜狗中转链接。"
   - name: "Vogue Business Beauty"
     source_type: "placeholder"
     url: ""
