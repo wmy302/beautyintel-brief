@@ -77,9 +77,14 @@ if (-not $ready) {
   exit 1
 }
 
-$Scheduler = Get-CimInstance Win32_Process -Filter "name = 'python.exe' or name = 'py.exe'" |
-  Where-Object { $_.CommandLine -like "*app.cli run-scheduler*" } |
-  Select-Object -First 1
+try {
+  $Scheduler = Get-CimInstance Win32_Process -Filter "name = 'python.exe' or name = 'py.exe'" |
+    Where-Object { $_.CommandLine -like "*app.cli run-scheduler*" } |
+    Select-Object -First 1
+} catch {
+  $Scheduler = $null
+  Write-Host "Cannot inspect scheduler process; starting a fresh background scheduler if needed." -ForegroundColor Yellow
+}
 
 if (-not $Scheduler) {
   Start-PythonProcess `
@@ -88,7 +93,11 @@ if (-not $Scheduler) {
     (Join-Path $ProjectRoot "data\scheduler.err.log")
 }
 
-Start-Process "http://127.0.0.1:$Port/reports/latest/view" | Out-Null
+try {
+  Start-Process "http://127.0.0.1:$Port/reports/latest/view" | Out-Null
+} catch {
+  Write-Host "Browser auto-open was blocked. Please open the URL below manually." -ForegroundColor Yellow
+}
 
 Write-Host "BeautyIntel local API: http://127.0.0.1:$Port"
 Write-Host "Latest report view: http://127.0.0.1:$Port/reports/latest/view"
