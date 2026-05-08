@@ -92,6 +92,9 @@ class IngestionPipeline:
                     existing.fetched_at = item.fetched_at
                     existing.raw_excerpt = item.raw_excerpt or existing.raw_excerpt
                     existing.content_text = item.content_text or existing.content_text
+                    if item.url:
+                        existing.url = item.url
+                        existing.canonical_url = item.canonical_url
                     if item.published_at is not None:
                         existing.published_at = item.published_at
                     refreshed += 1

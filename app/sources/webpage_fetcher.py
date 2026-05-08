@@ -13,6 +13,11 @@ from app.db.models import NewsItem, Source
 
 logger = logging.getLogger(__name__)
 
+REQUEST_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+}
+
 
 class WebpageFetcher:
     def fetch(self, source: Source) -> list[NewsItem]:
@@ -21,10 +26,7 @@ class WebpageFetcher:
                 source.url,
                 timeout=15,
                 follow_redirects=True,
-                headers={
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
-                    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-                },
+                headers=REQUEST_HEADERS,
             )
             response.raise_for_status()
         except Exception as exc:  # noqa: BLE001
@@ -38,7 +40,9 @@ class WebpageFetcher:
         seen: set[str] = set()
         for anchor in soup.find_all("a", href=True):
             title = " ".join(anchor.get_text(" ").split())
-            href = urljoin(source.url, anchor["href"])
+            href = self._article_url(urljoin(source.url, anchor["href"]), source)
+            if not href:
+                continue
             if not self._looks_like_news(title, href, source):
                 continue
             if href in seen:
@@ -64,6 +68,32 @@ class WebpageFetcher:
             if len(items) >= 20:
                 break
         return items
+
+    def _article_url(self, href: str, source: Source) -> str | None:
+        parsed = urlparse(href)
+        if "news.sogou.com" not in urlparse(source.url).netloc:
+            return href
+        if parsed.netloc == "news.sogou.com" and parsed.path.startswith("/link"):
+            return self._resolve_sogou_link(href, source.url)
+        return href
+
+    def _resolve_sogou_link(self, href: str, referer: str) -> str | None:
+        try:
+            response = httpx.get(
+                href,
+                timeout=8,
+                follow_redirects=True,
+                headers={**REQUEST_HEADERS, "Referer": referer},
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.info("sogou_link_resolve_failed url=%s error=%s", href, exc)
+            return None
+        final_url = str(response.url)
+        final_parsed = urlparse(final_url)
+        if response.status_code >= 400 or final_parsed.netloc == "news.sogou.com":
+            logger.info("sogou_link_skipped url=%s status=%s final=%s", href, response.status_code, final_url)
+            return None
+        return final_url.split("#")[0]
 
     def _fetch_sohu_author_page(self, html: str, source: Source) -> list[NewsItem]:
         items: list[NewsItem] = []
